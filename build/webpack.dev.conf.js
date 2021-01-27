@@ -63,7 +63,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           params: req.query
         }).then((response) => {
           // 在终端可以看到
-          console.log('axios', response.data)
+          // console.log('axios', response.data)
           res.json(response.data)
         }).catch((e) => {
           console.log(e)

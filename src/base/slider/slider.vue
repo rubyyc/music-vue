@@ -55,7 +55,7 @@ export default {
   methods: {
     _setSliderWidth(isResize) {
       this.children = this.$refs.sliderGroup.children
-      console.log(this.children.length)
+      // console.log(this.children.length)
 
       let width = 0
       let sliderWidth = this.$refs.slider.clientWidth
@@ -89,7 +89,6 @@ export default {
           pageIndex -= 1
         }
         this.currentPageIndex = pageIndex
-
         if (this.autoPlay) {
           clearTimeout(this.timer)
           this._play()
