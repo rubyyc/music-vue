@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div>推荐</div>
 </template>
 
 <script type="text/ecmascript-6">
