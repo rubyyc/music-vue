@@ -20,7 +20,7 @@
 
 <script type="text/ecmascript-6">
 import Slider from 'base/slider/slider'
-import { getRecommend } from 'api/recommend'
+import { getRecommend, getDiscList } from 'api/recommend'
 import { ERR_OK } from 'api/config'
 export default {
   components: {
@@ -33,6 +33,7 @@ export default {
   },
   created() {
     this._getRecommend()
+    this._getDiscList()
   },
   methods: {
     // 获取轮播图
@@ -44,6 +45,11 @@ export default {
           console.log(res.data.slider)
           this.recommends = res.data.slider
         }
+      })
+    },
+    _getDiscList() {
+      getDiscList().then((res) => {
+        console.log('result', res)
       })
     }
   }
