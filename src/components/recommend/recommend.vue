@@ -72,7 +72,6 @@ export default {
       if (!this.checkLoaded) {
         this.$refs.scroll.refresh()
         this.checkLoaded = true
-        console.log('xxx')
       }
     }
   }

@@ -51,6 +51,24 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       poll: config.dev.poll,
     },
     before(app) {
+      app.get('/api/getRecommend', (req, res) => {
+        // var url = 'https://u.y.qq.com/cgi-bin/musics.fcg'
+        var url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
+
+        axios.get(url, {
+          headers: {
+            referer: 'https://c.y.qq.com/',
+            host: 'c.y.qq.com'
+          },
+          params: req.query
+        }).then((response) => {
+          // 在终端可以看到
+          // console.log('axios', response.data)
+          res.json(response.data)
+        }).catch((e) => {
+          console.log(e)
+        })
+      }),
       app.get('/api/getDiscList', (req, res) => {
         // var url = 'https://u.y.qq.com/cgi-bin/musics.fcg'
         var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
