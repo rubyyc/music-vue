@@ -16,7 +16,7 @@
           <ul>
             <li v-for="(item,index) in discList" class="item" :key="index">
               <div class="icon">
-                <img width="60" height="60" :src="item.imgurl">
+                <img width="60" height="60" v-lazy="item.imgurl">
               </div>
               <div class="text">
                 <h2 class="name" v-html="item.creator.name"></h2>
@@ -54,14 +54,13 @@ export default {
     // 获取轮播图
     _getRecommend() {
       getRecommend().then((res) => {
-        console.log(0)
         if (res.code === ERR_OK) {
-          console.log(1)
           console.log(res.data.slider)
           this.recommends = res.data.slider
         }
       })
     },
+    // 获取推荐歌单
     _getDiscList() {
       getDiscList().then((res) => {
         console.log('result', res)

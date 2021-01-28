@@ -54,7 +54,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       app.get('/api/getRecommend', (req, res) => {
         // var url = 'https://u.y.qq.com/cgi-bin/musics.fcg'
         var url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
-
+        
         axios.get(url, {
           headers: {
             referer: 'https://c.y.qq.com/',
@@ -80,8 +80,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           },
           params: req.query
         }).then((response) => {
-          // 在终端可以看到
-          // console.log('axios', response.data)
           res.json(response.data)
         }).catch((e) => {
           console.log(e)
