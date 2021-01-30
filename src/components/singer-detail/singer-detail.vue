@@ -6,6 +6,7 @@
 
 <script type="text/ecmascript-6">
 import { mapGetters } from 'vuex'
+import { getSingerDetail } from 'api/singer'
 export default {
   computed: {
     ...mapGetters([
@@ -13,7 +14,17 @@ export default {
     ])
   },
   created() {
-    console.log(this.singer)
+    this._getDetail()
+  },
+  methods: {
+    _getDetail() {
+      console.log('this.singer=', this.singer)
+      getSingerDetail(this.singer).then((res) => {
+        console.log(1111)
+        console.log(res.singerSongList.data.songList)
+        console.log(1111)
+      })
+    }
   }
 }
 </script>

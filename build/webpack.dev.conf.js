@@ -54,7 +54,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       app.get('/api/getRecommend', (req, res) => {
         // var url = 'https://u.y.qq.com/cgi-bin/musics.fcg'
         var url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
-        
+
         axios.get(url, {
           headers: {
             referer: 'https://c.y.qq.com/',
@@ -80,6 +80,22 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           },
           params: req.query
         }).then((response) => {
+          res.json(response.data)
+        }).catch((e) => {
+          console.log(e)
+        })
+      }),
+      app.get('/api/getSingerDetail', (req, res) => {
+        var url = 'https://u.y.qq.com/cgi-bin/musics.fcg'
+
+        axios.get(url, {
+          header:{
+            referer: 'https://y.qq.com/',
+            host: 'y.qq.com'
+          },
+          params: req.query
+        }).then((response) => {
+          console.log('response', response)
           res.json(response.data)
         }).catch((e) => {
           console.log(e)

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <remote-js src="https://y.qq.com/component/m/qmfe-security-sign/index.umd.js?max_age=2592000"></remote-js>
     <m-header></m-header>
     <tab></tab>
     <keep-alive>
@@ -15,7 +16,15 @@ import Tab from 'components/tab/tab'
 export default {
   components: {
     MHeader,
-    Tab
+    Tab,
+    'remote-js': {
+      render(createElement) {
+        return createElement('script', {attrs: { type: 'text/javascript', src: this.src }})
+      },
+      props: {
+        src: { type: String, required: true }
+      }
+    }
   }
 }
 </script>
