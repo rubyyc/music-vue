@@ -7,6 +7,7 @@
 <script type="text/ecmascript-6">
 import { mapGetters } from 'vuex'
 import { getSingerDetail } from 'api/singer'
+import { ERR_OK } from 'api/config'
 export default {
   computed: {
     ...mapGetters([
@@ -18,11 +19,15 @@ export default {
   },
   methods: {
     _getDetail() {
+      if (!this.singer.id) {
+        this.$router.push('/singer')
+        return
+      }
       console.log('this.singer=', this.singer)
-      getSingerDetail(this.singer).then((res) => {
-        console.log(1111)
-        console.log(res.singerSongList.data.songList)
-        console.log(1111)
+      getSingerDetail(this.singer.id).then((res) => {
+        if (res.code === ERR_OK) {
+          console.log(res.data.list)
+        }
       })
     }
   }

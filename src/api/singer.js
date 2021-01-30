@@ -21,7 +21,23 @@ export function getSingerList() {
   return jsonp(url, data, options)
 }
 
-export function getSingerDetail(singer) {
+export function getSingerDetail(singerId) {
+  const url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg'
+  const data = Object.assign({}, commonParams, {
+    hostUin: 0,
+    needNewCode: 0,
+    platform: 'yqq',
+    order: 'listen',
+    begin: 0,
+    num: 100,
+    songstatus: 1,
+    singermid: singerId,
+    g_tk: 1664029744
+  })
+  return jsonp(url, data, options)
+}
+// 最新接口尝试
+export function getSingerDetailByNewApi(singer) {
   console.log('singer....', singer)
   // const url = 'https://u.y.qq.com/cgi-bin/musics.fcg'
   const url = '/api/getSingerDetail'
