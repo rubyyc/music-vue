@@ -1,6 +1,6 @@
 <template>
   <transition name="slide" appear>
-    <div class="singer-detail">歌手详情页面</div>
+    <music-list :songs="songs" :title="title" :bg-image="bgImage"></music-list>
   </transition>
 </template>
 
@@ -10,16 +10,26 @@ import { getSingerDetail } from 'api/singer'
 import { createSong } from 'common/js/song'
 
 import { ERR_OK } from 'api/config'
+import MusicList from 'components/music-list/music-list.vue'
 export default {
+  components: {
+    MusicList
+  },
   data() {
     return {
       songs: []
     }
   },
   computed: {
+    title() {
+      return this.singer.name
+    },
     ...mapGetters([
       'singer'
-    ])
+    ]),
+    bgImage() {
+      return this.singer.avatar
+    }
   },
   created() {
     this._getDetail()
@@ -35,6 +45,7 @@ export default {
         if (res.code === ERR_OK) {
           // 获取歌手的歌曲列表
           console.log(res.data.list)
+          this.songs = []
           this.songs = this._normalizeSongs(res.data.list)
           console.log('this.songs', this.songs)
         }
@@ -56,14 +67,6 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
-  .singer-detail
-    position: fixed
-    z-index: 100
-    top: 0
-    left: 0
-    bottom: 0
-    right: 0
-    background: $color-background
   .slide-enter-active,.slide-leave-active
     transition: all 0.3s
   .slide-enter, .slide-leave-to
