@@ -51,6 +51,14 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       poll: config.dev.poll,
     },
     before(app) {
+      app.all('*', function(req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "X-Requested-With");
+        res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+        res.header("X-Powered-By", ' 3.2.1')
+        res.header("Content-Type", "application/json;charset=utf-8");
+        next();
+      }),
       app.get('/api/getRecommend', (req, res) => {
         // var url = 'https://u.y.qq.com/cgi-bin/musics.fcg'
         var url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
@@ -95,11 +103,43 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           },
           params: req.query
         }).then((response) => {
-          console.log('response', response)
+          // console.log('response', response)
           res.json(response.data)
         }).catch((e) => {
           console.log(e)
         })
+      }),
+      app.get('/api/getSongUrlBySongmid', (req, res) => {
+        // localhost
+        var url = 'http://localhost:3300/song/urls'
+        axios.get(url, {
+          header:{
+            referer: 'http://localhost:3300',
+            host: 'localhost:3300'
+          },
+          params: req.query
+        }).then((response) => {
+          console.log('response', response)
+          res.json(response.data)
+        }).catch((e) => {
+          console.log(e)
+          res.json(e.data)
+        })
+        // https://api.qq.jsososo.com/song/urls
+        // var url = 'https://api.qq.jsososo.com/song/urls'
+        // axios.get(url, {
+        //   header:{
+        //     referer: 'https://api.qq.jsososo.com',
+        //     host: 'api.qq.jsososo.com'
+        //   },
+        //   params: req.query
+        // }).then((response) => {
+        //   console.log('response', response)
+        //   res.json(response.data)
+        // }).catch((e) => {
+        //   console.log(e)
+        //   res.json(e.data)
+        // })
       })
     }
   },

@@ -1,7 +1,6 @@
 import axios from 'axios'
 import jsonp from 'common/js/jsonp'
 import { commonParams, options } from './config'
-// import axios from 'axios'
 
 export function getSingerList() {
   const url = 'https://c.y.qq.com/v8/fcg-bin/v8.fcg'
@@ -36,6 +35,21 @@ export function getSingerDetail(singerId) {
   })
   return jsonp(url, data, options)
 }
+
+export function getSongUrlBySongmid(songmid) {
+  const url = '/api/getSongUrlBySongmid'
+
+  const data = Object.assign({}, commonParams, {
+    id: songmid
+  })
+
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
 // 最新接口尝试
 export function getSingerDetailByNewApi(singer) {
   console.log('singer....', singer)
