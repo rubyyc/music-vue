@@ -1,29 +1,40 @@
 <template>
   <div class="music-list">
     <div class="back">
-      <i class="icon-back"></i>
+      <i class="icon-back" @click="back"></i>
     </div>
     <h1 class="title" v-html="title"></h1>
     <div class="bg-image" :style="bgStyle" ref="bgImage">
-      <div class="filter">
+      <div class="play-wrapper">
+        <div class="play" v-show="songs.length > 0" ref="playBtn">
+          <i class="icon-play"></i>
+          <span class="text">随机播放全部</span>
+        </div>
       </div>
+      <div class="filter" ref="filter"></div>
     </div>
-    <scroll :data="songs" class="list" ref="list">
+    <div class="bg-layer" ref="layer"></div>
+    <scroll @scroll="scroll" :probe-type="probeType" :listen-scroll="listenScroll" :data="songs" class="list" ref="list">
       <div class="song-list-wrapper">
         <song-list :songs="songs"></song-list>
+      </div>
+      <div class="loading-container" v-show="!songs.length">
+        <loading></loading>
       </div>
     </scroll>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-import songList from 'base/song-list/song-list.vue'
-import Scroll from 'base/scroll/scroll.vue'
+import Scroll from 'base/scroll/scroll'
+import SongList from 'base/song-list/song-list'
+// import { prefixStyle } from 'common/js/dom'
+import Loading from 'base/loading/loading'
+
+// const RESERVED_HEIGHT = 40
+// const transform = prefixStyle('transform')
+// const backdrop = prefixStyle('backdrop-filter')
 export default {
-  components: {
-    songList,
-    Scroll
-  },
   props: {
     bgImage: {
       type: String,
@@ -38,13 +49,37 @@ export default {
       default: ''
     }
   },
+  data() {
+    return {
+      scrollY: 0
+    }
+  },
   mounted() {
-    this.$refs.list.$el.style.top = `${this.$refs.bgImage.clientHeight}px`
+    this.imageHeight = this.$refs.bgImage.clientHeight
+    // this.minTranslateY = -this.imageHeight + RESERVED_HEIGHT
+    // this.$refs.list.$el.style.top = `${this.imageHeight}px`
   },
   computed: {
     bgStyle() {
       return `background-image: url(${this.bgImage})`
     }
+  },
+  created() {
+    this.probeType = 3
+    this.listenScroll = true
+  },
+  methods: {
+    scroll(pos) {
+      this.scrollY = pos.y
+    },
+    back() {
+      this.$router.back()
+    }
+  },
+  components: {
+    Scroll,
+    SongList,
+    Loading
   }
 }
 </script>
@@ -89,6 +124,7 @@ export default {
       padding-top: 70%
       transform-origin: top
       background-size: cover
+      z-index: 30
       .play-wrapper
         position: absolute
         bottom: 20px
@@ -127,9 +163,9 @@ export default {
     .list
       position: fixed
       top: 0
-      z-index: -100 
       bottom: 0
       width: 100%
+      z-index: 10
       background: $color-background
       .song-list-wrapper
         padding: 20px 30px

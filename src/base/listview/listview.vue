@@ -32,6 +32,11 @@ export default {
     selectItem(item) {
       this.$emit('select', item)
     }
+  },
+  watch: {
+    scrollY(newY) {
+      console.log('listviewNeyY', newY)
+    }
   }
 }
 </script>

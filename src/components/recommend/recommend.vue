@@ -57,12 +57,17 @@ export default {
       this._getDiscList()
     }, 100)
   },
+  watch: {
+    scrollY(newY) {
+      console.log('renewY', newY)
+    }
+  },
   methods: {
     // 获取轮播图
     _getRecommend() {
       getRecommend().then((res) => {
         if (res.code === ERR_OK) {
-          console.log(res.data.slider)
+          // console.log(res.data.slider)
           this.recommends = res.data.slider
         }
       })
@@ -70,7 +75,7 @@ export default {
     // 获取推荐歌单
     _getDiscList() {
       getDiscList().then((res) => {
-        console.log('result', res)
+        // console.log('result', res)
         this.discList = res.data.list
       })
     },

@@ -10,7 +10,7 @@ import { getSingerDetail } from 'api/singer'
 import { createSong } from 'common/js/song'
 
 import { ERR_OK } from 'api/config'
-import MusicList from 'components/music-list/music-list.vue'
+import MusicList from 'components/music-list/music-list'
 export default {
   components: {
     MusicList
@@ -40,14 +40,14 @@ export default {
         this.$router.push('/singer')
         return
       }
-      console.log('this.singer=', this.singer)
+      // console.log('this.singer=', this.singer)
       getSingerDetail(this.singer.id).then((res) => {
         if (res.code === ERR_OK) {
           // 获取歌手的歌曲列表
-          console.log(res.data.list)
+          // console.log(res.data.list)
           this.songs = []
           this.songs = this._normalizeSongs(res.data.list)
-          console.log('this.songs', this.songs)
+          // console.log('this.songs', this.songs)
         }
       })
     },
