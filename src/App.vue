@@ -6,17 +6,20 @@
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
+    <player></player>
   </div>
 </template>
 
 <script>
 import MHeader from 'components/m-header/m-header'
 import Tab from 'components/tab/tab'
+import Player from 'components/player/player.vue'
 
 export default {
   components: {
     MHeader,
     Tab,
+    Player,
     'remote-js': {
       render(createElement) {
         return createElement('script', {attrs: { type: 'text/javascript', src: this.src }})
